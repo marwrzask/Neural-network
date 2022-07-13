@@ -43,7 +43,7 @@ class Perceptron:
             print("##" * 10)
 
     def predict(self):
-        X_with_bias = np.c_[np.ones((len(X_dane), 1)), X_dane]
+        X_with_bias = np.c_[np.zeros((len(X_dane), 1)), X_dane]
         summation = self.adder(X_with_bias, self.weights)
         return self.activation_function(summation)
 
@@ -53,7 +53,7 @@ class Perceptron:
         return total_loss
 
     def predict(self, X_dane):
-        X_with_bias = np.c_[np.ones((len(X_dane), 1)), X_dane]
+        X_with_bias = np.c_[np.zeros((len(X_dane), 1)), X_dane]
         summation = self.adder(X_with_bias, self.weights)
         return self.activation_function(summation)
 
@@ -99,22 +99,22 @@ if __name__ == '__main__':
     X = scipy.io.loadmat('dane_perceptron.mat')
     X_dane = np.transpose(X['dane'])
     df = pd.DataFrame(X_dane)
-    inputs_with_bias = np.c_[np.ones((len(X_dane), 1)), X_dane]
+    inputs_with_bias = np.c_[np.zeros((len(X_dane), 1)), X_dane]
     X_input = X_dane[:, 0:2]
     y_goal = X_dane[:, 2]
 
-    """
+    '''
     X_input = np.array([[0,1],[0,0],[1,1],[1,0]])
-    inputs_with_bias = np.c_[np.ones((4, 1)), X_input]
+    inputs_with_bias = np.c_[np.zeros((4, 1)), X_input]
     y_goal = np.array([1,1,0,1])
     y_goal.reshape(4,1)
     df = pd.DataFrame(X_input)
-    """
+    '''
 
     time_scores = []
-    for i in range(5):
+    for i in range(10):
         start_time = datetime.now()
-        model_1 = Perceptron(learning_rate=0.1, epochs=1000)
+        model_1 = Perceptron(learning_rate=0.1, epochs=200)
         model_1.fit(X_input, y_goal)
         end_time = datetime.now()
         _ = model_1.total_loss()
